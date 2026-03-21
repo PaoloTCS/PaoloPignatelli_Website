@@ -3,25 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Related Sites - Paolo Pignatelli</title>
+    <title>The Network — Paolo Pignatelli</title>
     <link rel="stylesheet" href="styles.css">
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Source+Sans+Pro:wght@300;400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=JetBrains+Mono:wght@400;500&family=Playfair+Display:wght@400;600;700&family=Source+Sans+Pro:wght@300;400;600&display=swap" rel="stylesheet">
 </head>
-<body>
+<body class="theme-dark">
     <header>
         <nav class="navbar">
             <div class="nav-container">
                 <div class="nav-logo">
-                    <img src="Images/Pignatelli_stemma (1).jpg" alt="Pignatelli Coat of Arms" class="logo">
-                    <h1>Paolo Pignatelli</h1>
+                    <a href="index.html" class="nav-logo-text"><h1>Paolo Pignatelli</h1></a>
                 </div>
                 <ul class="nav-menu">
                     <li><a href="index.html" class="nav-link">Home</a></li>
                     <li><a href="linguistics.html" class="nav-link">Linguistics</a></li>
                     <li><a href="philosophy.html" class="nav-link">Philosophy</a></li>
-                    <li><a href="related-sites.html" class="nav-link active">Related Sites</a></li>
+                    <li><a href="related-sites.html" class="nav-link active">Network</a></li>
+                    <li><a href="protocols.html" class="nav-link">Protocols</a></li>
                 </ul>
-                <div class="hamburger">
+                <div class="hamburger" aria-label="Menu">
                     <span></span>
                     <span></span>
                     <span></span>
@@ -30,158 +30,225 @@
         </nav>
     </header>
 
-    <main>
-        <section class="page-header">
-            <div class="container">
-                <h1>Related Sites</h1>
-                <p>Useful resources, databases, and links for linguistics and philosophy research</p>
+    <main class="network-page-main">
+        <div class="network-intro">
+            <h1 class="network-title">The Network</h1>
+            <p class="network-subtitle">Click any node to explore</p>
+        </div>
+        <div class="network-layout">
+            <div class="network-graph-wrap" id="graph-wrap">
+                <svg id="network-svg" aria-label="Domain network graph"></svg>
             </div>
-        </section>
-
-        <section class="page-content">
-            <div class="container">
-                <div class="content-section">
-                    <h2>My Websites & Projects</h2>
-                    <p>A collection of websites and digital projects spanning various interests and research areas.</p>
-                    
-                    <div class="links-grid">
-                        <div class="link-item">
-                            <h3><a href="https://computednews.com" target="_blank" rel="noopener">Computed News</a></h3>
-                            <p>Digital news and technology insights, analyzing trends in computational journalism and media technology.</p>
-                        </div>
-                        
-                        <div class="link-item">
-                            <h3><a href="https://familiaai.com" target="_blank" rel="noopener">Familia AI</a></h3>
-                            <p>Exploring artificial intelligence applications for families and genealogical research.</p>
-                        </div>
-                        
-                        <div class="link-item">
-                            <h3><a href="https://internationalmirrors.com" target="_blank" rel="noopener">International Mirrors</a></h3>
-                            <p>Reflections on global perspectives and cross-cultural understanding in our interconnected world.</p>
-                        </div>
-                        
-                        <div class="link-item">
-                            <h3><a href="https://litchfieldcapitalcorporation.com" target="_blank" rel="noopener">Litchfield Capital Corporation</a></h3>
-                            <p>Financial insights and investment analysis, focusing on strategic capital allocation and market trends.</p>
-                        </div>
-                        
-                        <div class="link-item">
-                            <h3><a href="https://politicalcorner.com" target="_blank" rel="noopener">Political Corner</a></h3>
-                            <p>Analysis and commentary on political developments, policy discussions, and democratic processes.</p>
-                        </div>
-                        
-                        <div class="link-item">
-                            <h3><a href="https://www.thecornerstore.com" target="_blank" rel="noopener">The Corner Store</a></h3>
-                            <p>A curated collection of thoughts, resources, and interesting finds from around the web.</p>
-                        </div>
-                        
-                        <div class="link-item">
-                            <h3><a href="https://verbumtechnologies.com" target="_blank" rel="noopener">Verbum Technologies</a></h3>
-                            <p>Language technologies and computational linguistics applications for modern communication.</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="content-section">
-                    <h2>Academic Resources</h2>
-                    <p>Essential databases, encyclopedias, and tools for linguistics and philosophy research.</p>
-                    
-                    <div class="links-grid">
-                        <div class="link-item">
-                            <h3><a href="https://www.linguisticsociety.org/" target="_blank" rel="noopener">Linguistic Society of America</a></h3>
-                            <p>Premier professional organization for linguists, offering resources, publications, and conference information.</p>
-                        </div>
-                        
-                        <div class="link-item">
-                            <h3><a href="https://wals.info/" target="_blank" rel="noopener">WALS Online</a></h3>
-                            <p>World Atlas of Language Structures - comprehensive database of structural properties of languages.</p>
-                        </div>
-                        
-                        <div class="link-item">
-                            <h3><a href="https://plato.stanford.edu/" target="_blank" rel="noopener">Stanford Encyclopedia of Philosophy</a></h3>
-                            <p>Authoritative philosophical encyclopedia with peer-reviewed entries by leading philosophers.</p>
-                        </div>
-                        
-                        <div class="link-item">
-                            <h3><a href="https://philpapers.org/" target="_blank" rel="noopener">PhilPapers</a></h3>
-                            <p>Comprehensive index and bibliography of philosophy maintained by the community of philosophers.</p>
-                        </div>
-                        
-                        <div class="link-item">
-                            <h3><a href="https://www.jstor.org/" target="_blank" rel="noopener">JSTOR</a></h3>
-                            <p>Digital library providing access to thousands of academic journals, books, and primary sources.</p>
-                        </div>
-                        
-                        <div class="link-item">
-                            <h3><a href="https://www.nltk.org/" target="_blank" rel="noopener">NLTK</a></h3>
-                            <p>Natural Language Toolkit - platform for building Python programs to work with human language data.</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="content-section">
-                    <h2>Computational & Digital Humanities</h2>
-                    <p>Resources at the intersection of technology, language, and humanities research.</p>
-                    
-                    <div class="links-grid">
-                        <div class="link-item">
-                            <h3><a href="https://www.aclweb.org/" target="_blank" rel="noopener">Association for Computational Linguistics</a></h3>
-                            <p>International scientific and professional society for people working on computational problems involving human language.</p>
-                        </div>
-                        
-                        <div class="link-item">
-                            <h3><a href="https://www.digitalhumanities.org/" target="_blank" rel="noopener">Alliance of Digital Humanities Organizations</a></h3>
-                            <p>Umbrella organization for digital humanities organizations worldwide, promoting digital humanities research.</p>
-                        </div>
-                        
-                        <div class="link-item">
-                            <h3><a href="https://tei-c.org/" target="_blank" rel="noopener">Text Encoding Initiative</a></h3>
-                            <p>Guidelines for encoding machine-readable texts in the humanities and social sciences.</p>
-                        </div>
-                        
-                        <div class="link-item">
-                            <h3><a href="https://voyant-tools.org/" target="_blank" rel="noopener">Voyant Tools</a></h3>
-                            <p>Web-based reading and analysis environment for digital texts and corpora.</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="content-section">
-                    <h2>Academic Tools & Utilities</h2>
-                    <p>Useful tools for academic research, writing, and citation management.</p>
-                    
-                    <div class="links-grid">
-                        <div class="link-item">
-                            <h3><a href="https://www.zotero.org/" target="_blank" rel="noopener">Zotero</a></h3>
-                            <p>Free tool to help collect, organize, cite, and share research sources.</p>
-                        </div>
-                        
-                        <div class="link-item">
-                            <h3><a href="https://www.mendeley.com/" target="_blank" rel="noopener">Mendeley</a></h3>
-                            <p>Reference manager and academic social network for researchers.</p>
-                        </div>
-                        
-                        <div class="link-item">
-                            <h3><a href="https://www.overleaf.com/" target="_blank" rel="noopener">Overleaf</a></h3>
-                            <p>Collaborative cloud-based LaTeX editor for academic writing and publication.</p>
-                        </div>
-                        
-                        <div class="link-item">
-                            <h3><a href="https://orcid.org/" target="_blank" rel="noopener">ORCID</a></h3>
-                            <p>Persistent digital identifier for researchers, connecting research activities and outputs.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
+            <aside class="network-panel" id="network-panel" aria-live="polite">
+                <p class="panel-placeholder" id="panel-placeholder">Click any node to explore</p>
+                <div id="panel-detail" hidden></div>
+            </aside>
+        </div>
     </main>
 
-    <footer>
-        <div class="container">
-            <p>&copy; 2024 Paolo Pignatelli. All rights reserved.</p>
-        </div>
-    </footer>
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="script.js"></script>
+    <script>
+(function () {
+    const DOMAINS = [
+        { id: 'paolo', name: 'Paolo Pignatelli', domain: 'paolopignatelli.com', url: 'https://paolopignatelli.com', type: 'root', color: '#c9a84c', radius: 26, desc: 'Personal and professional hub. Physicist, theorist, founder.' },
+        { id: 'verbum', name: 'Verbum Technologies', domain: 'verbumtechnologies.com', url: 'https://verbumtechnologies.com', type: 'ai', color: '#4a9eff', radius: 18, desc: 'Core R&D. FIL framework, Computational Relativity, PaoloLab.' },
+        { id: 'collaborativ', name: 'Collaborativ.AI', domain: 'collaborativ.ai', url: 'https://collaborativ.ai', type: 'ai', color: '#4a9eff', radius: 16, desc: 'Multi-AI consensus and knowledge convergence platform.' },
+        { id: 'collaborativeai', name: 'CollaborativeAI', domain: 'collaborativeai.ai', url: 'https://collaborativeai.ai', type: 'ai', color: '#4a9eff', radius: 14, desc: 'Extended AI-human collaborative research platform.' },
+        { id: 'familiaai', name: 'FamiliaAI', domain: 'familiaai.com', url: 'https://familiaai.com', type: 'ai', color: '#4a9eff', radius: 14, desc: 'AI for families. Privacy-first ambient intelligence.' },
+        { id: 'litchfield', name: 'Litchfield Capital', domain: 'litchfieldcapitalcorporation.com', url: 'https://litchfieldcapitalcorporation.com', type: 'corporate', color: '#c9a84c', radius: 18, desc: 'Parent corporation. Est. 1992. Research, investment, technology.' },
+        { id: 'cornerstore', name: 'The Corner Store', domain: 'thecornerstore.com', url: 'https://thecornerstore.com', type: 'commerce', color: '#ff7f4a', radius: 16, desc: 'Internet since 1992. Microsoft licensing. One of the oldest running sites.' },
+        { id: 'computednews', name: 'Computed News', domain: 'computednews.com', url: 'https://computednews.com', type: 'media', color: '#4aff9a', radius: 14, desc: 'Algorithmically curated technology news.' },
+        { id: 'intlmirrors', name: 'International Mirrors', domain: 'internationalmirrors.com', url: 'https://internationalmirrors.com', type: 'media', color: '#4aff9a', radius: 14, desc: 'Global information exchange platform.' },
+        { id: 'polcorner', name: 'Political Corner', domain: 'politicalcorner.com', url: 'https://politicalcorner.com', type: 'media', color: '#4aff9a', radius: 13, desc: 'Evidence-based political analysis.' }
+    ];
+
+    const EDGES = [
+        { source: 'paolo', target: 'verbum', strength: 0.9 },
+        { source: 'paolo', target: 'litchfield', strength: 0.8 },
+        { source: 'paolo', target: 'collaborativ', strength: 0.7 },
+        { source: 'paolo', target: 'collaborativeai', strength: 0.6 },
+        { source: 'paolo', target: 'familiaai', strength: 0.6 },
+        { source: 'paolo', target: 'cornerstore', strength: 0.6 },
+        { source: 'paolo', target: 'computednews', strength: 0.5 },
+        { source: 'paolo', target: 'intlmirrors', strength: 0.5 },
+        { source: 'paolo', target: 'polcorner', strength: 0.4 },
+        { source: 'verbum', target: 'collaborativ', strength: 0.6 },
+        { source: 'verbum', target: 'collaborativeai', strength: 0.5 },
+        { source: 'verbum', target: 'familiaai', strength: 0.5 },
+        { source: 'litchfield', target: 'cornerstore', strength: 0.6 },
+        { source: 'litchfield', target: 'verbum', strength: 0.7 },
+        { source: 'collaborativ', target: 'collaborativeai', strength: 0.8 },
+        { source: 'computednews', target: 'intlmirrors', strength: 0.4 },
+        { source: 'computednews', target: 'polcorner', strength: 0.3 }
+    ];
+
+    const svgEl = document.getElementById('network-svg');
+    const wrap = document.getElementById('graph-wrap');
+    const panel = document.getElementById('network-panel');
+    const panelPh = document.getElementById('panel-placeholder');
+    const panelDetail = document.getElementById('panel-detail');
+
+    const nodes = DOMAINS.map(function (d) { return Object.assign({}, d); });
+    const links = EDGES.map(function (e) { return Object.assign({}, e); });
+
+    function showPanel(d) {
+        panelPh.hidden = true;
+        panelDetail.hidden = false;
+        panelDetail.replaceChildren();
+        var h3 = document.createElement('h3');
+        h3.textContent = d.name;
+        var dom = document.createElement('p');
+        dom.className = 'panel-domain';
+        dom.textContent = d.domain;
+        var desc = document.createElement('p');
+        desc.className = 'panel-desc';
+        desc.textContent = d.desc;
+        var a = document.createElement('a');
+        a.className = 'panel-link';
+        a.href = d.url;
+        a.target = '_blank';
+        a.rel = 'noopener noreferrer';
+        a.textContent = 'Visit site →';
+        panelDetail.append(h3, dom, desc, a);
+    }
+
+    function resetPanel() {
+        panelPh.hidden = false;
+        panelDetail.hidden = true;
+        panelDetail.replaceChildren();
+    }
+
+    function sizeSvg() {
+        const w = wrap.clientWidth || 600;
+        const h = Math.max(480, Math.min(window.innerHeight - 220, 720));
+        const s = d3.select(svgEl);
+        s.attr('viewBox', [0, 0, w, h]).attr('width', w).attr('height', h);
+        s.select('rect.network-bg').attr('width', w).attr('height', h);
+        return { w: w, h: h };
+    }
+
+    let { w, h } = sizeSvg();
+
+    const svg = d3.select(svgEl);
+    svg.append('rect')
+        .attr('class', 'network-bg')
+        .attr('width', w)
+        .attr('height', h)
+        .attr('fill', '#0a0e1a')
+        .on('click', resetPanel);
+    const gRoot = svg.append('g');
+
+    const linkG = gRoot.append('g').attr('stroke', 'rgba(201,168,76,0.22)').attr('stroke-linecap', 'round');
+    const nodeG = gRoot.append('g');
+    const labelG = gRoot.append('g');
+
+    const linkSel = linkG
+        .selectAll('line')
+        .data(links)
+        .join('line')
+        .attr('stroke-width', function (d) { return 1 + d.strength * 2.5; })
+        .attr('pointer-events', 'none');
+
+    const nodeSel = nodeG
+        .selectAll('circle')
+        .data(nodes)
+        .join('circle')
+        .attr('r', function (d) { return d.radius; })
+        .attr('fill', function (d) { return d.color; })
+        .attr('stroke', 'rgba(10,14,26,0.85)')
+        .attr('stroke-width', 2)
+        .style('cursor', 'grab')
+        .on('click', function (event, d) {
+            event.stopPropagation();
+            showPanel(d);
+        });
+
+    const labelSel = labelG
+        .selectAll('text')
+        .data(nodes)
+        .join('text')
+        .attr('class', 'node-label')
+        .attr('text-anchor', 'middle')
+        .attr('dominant-baseline', 'hanging')
+        .attr('pointer-events', 'none')
+        .text(function (d) {
+            return d.id === 'paolo' ? 'paolopignatelli.com' : d.domain;
+        });
+
+    const simulation = d3
+        .forceSimulation(nodes)
+        .force(
+            'link',
+            d3
+                .forceLink(links)
+                .id(function (d) { return d.id; })
+                .strength(function (d) { return d.strength * 0.65; })
+                .distance(function (d) { return 90 - d.strength * 35; })
+        )
+        .force('charge', d3.forceManyBody().strength(-220))
+        .force('center', d3.forceCenter(w / 2, h / 2))
+        .force(
+            'collide',
+            d3.forceCollide().radius(function (d) {
+                return d.radius + 10;
+            })
+        );
+
+    function dragstarted(event) {
+        if (!event.active) simulation.alphaTarget(0.35).restart();
+        event.subject.fx = event.subject.x;
+        event.subject.fy = event.subject.y;
+    }
+    function dragged(event) {
+        event.subject.fx = event.x;
+        event.subject.fy = event.y;
+    }
+    function dragended(event) {
+        if (!event.active) simulation.alphaTarget(0);
+        event.subject.fx = null;
+        event.subject.fy = null;
+    }
+
+    nodeSel.call(
+        d3.drag().on('start', dragstarted).on('drag', dragged).on('end', dragended)
+    );
+
+    simulation.on('tick', function () {
+        linkSel
+            .attr('x1', function (d) { return d.source.x; })
+            .attr('y1', function (d) { return d.source.y; })
+            .attr('x2', function (d) { return d.target.x; })
+            .attr('y2', function (d) { return d.target.y; });
+
+        nodeSel.attr('cx', function (d) { return d.x; }).attr('cy', function (d) { return d.y; });
+
+        labelSel
+            .attr('x', function (d) { return d.x; })
+            .attr('y', function (d) { return d.y + d.radius + 6; });
+    });
+
+    window.addEventListener(
+        'resize',
+        debounce(function () {
+            const s = sizeSvg();
+            w = s.w;
+            h = s.h;
+            simulation.force('center', d3.forceCenter(w / 2, h / 2));
+            simulation.alpha(0.35).restart();
+        }, 200)
+    );
+
+    function debounce(fn, ms) {
+        let t;
+        return function () {
+            clearTimeout(t);
+            const a = arguments;
+            const self = this;
+            t = setTimeout(function () { fn.apply(self, a); }, ms);
+        };
+    }
+})();
+    </script>
 </body>
-</html> 
+</html>
