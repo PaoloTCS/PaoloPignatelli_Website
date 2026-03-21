@@ -517,15 +517,6 @@ main {
     letter-spacing: 0.05em;
 }
 
-.protocol-link a {
-    color: var(--gold);
-    text-decoration: none;
-}
-
-.protocol-link a:hover {
-    text-decoration: underline;
-}
-
 /* Footer (light pages) */
 footer {
     background: #1c2833;
