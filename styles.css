@@ -457,9 +457,98 @@ main {
     text-decoration: underline;
 }
 
+.network-panel .panel-links {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    align-items: flex-start;
+}
+
+.network-panel .panel-link-repo {
+    color: #7ec8a8;
+}
+
+.network-panel .panel-link-repo:hover {
+    color: #9dd4bc;
+}
+
 .network-panel .panel-placeholder {
     color: var(--text-dim);
     line-height: 1.6;
+}
+
+.network-panel .panel-similar-heading {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.1rem;
+    margin: 1.25rem 0 0.35rem;
+    color: var(--gold);
+    font-weight: 600;
+}
+
+.network-panel .panel-similar-intro {
+    font-family: 'Source Sans Pro', sans-serif;
+    font-size: 0.8rem;
+    color: var(--text-dim);
+    margin-bottom: 0.75rem;
+    line-height: 1.45;
+}
+
+.network-panel .panel-similar-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.network-panel .panel-similar-list li {
+    margin-bottom: 1rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid rgba(201, 168, 76, 0.15);
+}
+
+.network-panel .panel-similar-list li:last-child {
+    margin-bottom: 0;
+    padding-bottom: 0;
+    border-bottom: none;
+}
+
+.network-panel .panel-similar-title {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.35rem 0.65rem;
+    margin-bottom: 0.35rem;
+}
+
+.network-panel .panel-similar-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: #e8c96b;
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    text-align: left;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+}
+
+.network-panel .panel-similar-name:hover {
+    color: #f0d78a;
+}
+
+.network-panel .panel-similar-domain {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.72rem;
+    color: var(--text-dim);
+}
+
+.network-panel .panel-similar-note {
+    font-family: 'Source Sans Pro', sans-serif;
+    font-size: 0.88rem;
+    color: #b8b4ac;
+    line-height: 1.5;
+    margin: 0;
 }
 
 .node-label {

@@ -34,7 +34,7 @@
     <main class="network-page-main">
         <div class="network-intro">
             <h1 class="network-title">The Network</h1>
-            <p class="network-subtitle">Click any node to explore</p>
+            <p class="network-subtitle">Click any node for details and theme overlaps with other sites</p>
         </div>
         <div class="network-layout">
             <div class="network-graph-wrap" id="graph-wrap">
@@ -52,16 +52,63 @@
     <script>
 (function () {
     const DOMAINS = [
-        { id: 'paolo', name: 'Paolo Pignatelli', domain: 'paolopignatelli.com', url: 'https://paolopignatelli.com', type: 'root', color: '#c9a84c', radius: 26, desc: 'Personal and professional hub. Physicist, theorist, founder.' },
-        { id: 'verbum', name: 'Verbum Technologies', domain: 'verbumtechnologies.com', url: 'https://verbumtechnologies.com', type: 'ai', color: '#4a9eff', radius: 18, desc: 'Core R&D. FIL framework, Computational Relativity, PaoloLab.' },
-        { id: 'collaborativ', name: 'Collaborativ.AI', domain: 'collaborativ.ai', url: 'https://collaborativ.ai', type: 'ai', color: '#4a9eff', radius: 16, desc: 'Multi-AI consensus and knowledge convergence platform.' },
-        { id: 'collaborativeai', name: 'CollaborativeAI', domain: 'collaborativeai.ai', url: 'https://collaborativeai.ai', type: 'ai', color: '#4a9eff', radius: 14, desc: 'Extended AI-human collaborative research platform.' },
-        { id: 'familiaai', name: 'FamiliaAI', domain: 'familiaai.com', url: 'https://familiaai.com', type: 'ai', color: '#4a9eff', radius: 14, desc: 'AI for families. Privacy-first ambient intelligence.' },
-        { id: 'litchfield', name: 'Litchfield Capital', domain: 'litchfieldcapitalcorporation.com', url: 'https://litchfieldcapitalcorporation.com', type: 'corporate', color: '#c9a84c', radius: 18, desc: 'Parent corporation. Est. 1992. Research, investment, technology.' },
-        { id: 'cornerstore', name: 'The Corner Store', domain: 'thecornerstore.com', url: 'https://thecornerstore.com', type: 'commerce', color: '#ff7f4a', radius: 16, desc: 'Internet since 1992. Microsoft licensing. One of the oldest running sites.' },
-        { id: 'computednews', name: 'Computed News', domain: 'computednews.com', url: 'https://computednews.com', type: 'media', color: '#4aff9a', radius: 14, desc: 'Algorithmically curated technology news.' },
-        { id: 'intlmirrors', name: 'International Mirrors', domain: 'internationalmirrors.com', url: 'https://internationalmirrors.com', type: 'media', color: '#4aff9a', radius: 14, desc: 'Global information exchange platform.' },
-        { id: 'polcorner', name: 'Political Corner', domain: 'politicalcorner.com', url: 'https://politicalcorner.com', type: 'media', color: '#4aff9a', radius: 13, desc: 'Evidence-based political analysis.' }
+        { id: 'paolo', name: 'Paolo Pignatelli', domain: 'paolopignatelli.com', url: 'https://paolopignatelli.com', type: 'root', color: '#c9a84c', radius: 26, desc: 'Central hub: personal and professional front door. Physicist, theorist, founder.', repo: 'https://github.com/PaoloTCS/PaoloPignatelli_Website', similar: [
+            { id: 'verbum', note: 'R&D results and frameworks are summarized here; the hub points to deeper technical work there.' },
+            { id: 'cornerstore', note: 'Same long-running business thread: public hub vs. legacy commercial storefront.' },
+            { id: 'litchfield', note: 'Corporate structure behind research, commerce, and technology holdings.' },
+            { id: 'collaborativ', note: 'AI collaboration stack is part of the same intellectual network as the hub.' }
+        ] },
+        { id: 'verbum', name: 'Verbum Technologies', domain: 'verbumtechnologies.com', url: 'https://verbumtechnologies.com', type: 'ai', color: '#4a9eff', radius: 18, desc: 'Primary R&D surface: FIL, Computational Relativity, PaoloLab — expect frequent updates.', repo: 'https://github.com/PaoloTCS/VerbumTechnologiesWebsite', similar: [
+            { id: 'paolo', note: 'Hub explains who and why; Verbum hosts evolving technical substance.' },
+            { id: 'collaborativ', note: 'Shared AI-infrastructure and consensus themes with the lab.' },
+            { id: 'collaborativeai', note: 'Adjacent collaborative-research positioning; both extend multi-agent work.' },
+            { id: 'familiaai', note: 'Applied intelligence products trace back to the same R&D lineage.' },
+            { id: 'computednews', note: 'Technology news curation overlaps Verbum’s focus on tools and ideas in the wild.' }
+        ] },
+        { id: 'collaborativ', name: 'Collaborativ.AI', domain: 'collaborativ.ai', url: 'https://collaborativ.ai', type: 'ai', color: '#4a9eff', radius: 16, desc: 'Multi-AI consensus and knowledge convergence platform.', similar: [
+            { id: 'verbum', note: 'Upstream R&D feeds the consensus and tooling story.' },
+            { id: 'collaborativeai', note: 'Closest sibling product: collaborative AI workflows and research.' },
+            { id: 'familiaai', note: 'Same AI portfolio; different audience (teams vs. families).' },
+            { id: 'paolo', note: 'Hub ties the public narrative to these platforms.' }
+        ] },
+        { id: 'collaborativeai', name: 'CollaborativeAI', domain: 'collaborativeai.ai', url: 'https://collaborativeai.ai', type: 'ai', color: '#4a9eff', radius: 14, desc: 'Extended AI-human collaborative research platform.', repo: 'https://github.com/PaoloTCS/CollaborativeAI', similar: [
+            { id: 'collaborativ', note: 'Shared DNA: multi-agent collaboration and convergence.' },
+            { id: 'verbum', note: 'Research outputs and prototypes surface through Verbum’s R&D channel.' },
+            { id: 'familiaai', note: 'Parallel product line under the same AI umbrella.' },
+            { id: 'paolo', note: 'Personal hub positions the whole AI cluster.' }
+        ] },
+        { id: 'familiaai', name: 'FamiliaAI', domain: 'familiaai.com', url: 'https://familiaai.com', type: 'ai', color: '#4a9eff', radius: 14, desc: 'AI for families. Privacy-first ambient intelligence.', repo: 'https://github.com/PaoloTCS/Familiaai', similar: [
+            { id: 'collaborativ', note: 'Same platform family; FamiliaAI targets home and privacy use cases.' },
+            { id: 'collaborativeai', note: 'Human–AI collaboration themes with a consumer focus.' },
+            { id: 'verbum', note: 'Underlying models and research are developed under the Verbum R&D umbrella.' },
+            { id: 'paolo', note: 'Announced and contextualized from the central site.' }
+        ] },
+        { id: 'litchfield', name: 'Litchfield Capital', domain: 'litchfieldcapitalcorporation.com', url: 'https://litchfieldcapitalcorporation.com', type: 'corporate', color: '#c9a84c', radius: 18, desc: 'Parent corporation. Est. 1992. Research, investment, technology.', repo: 'https://github.com/PaoloTCS/LitchfieldCapitalCorporation', similar: [
+            { id: 'paolo', note: 'Personal brand sits inside the broader corporate portfolio.' },
+            { id: 'verbum', note: 'R&D entity under the same holding structure.' },
+            { id: 'cornerstore', note: 'Operational continuity since 1992: licensing and services alongside research and media.' }
+        ] },
+        { id: 'cornerstore', name: 'The Corner Store', domain: 'thecornerstore.com', url: 'https://thecornerstore.com', type: 'commerce', color: '#ff7f4a', radius: 16, desc: 'Ongoing commercial site since 1992 (e.g. Microsoft licensing). Distinct from the R&D-heavy properties.', repo: 'https://github.com/PaoloTCS/TheCornerStore', similar: [
+            { id: 'paolo', note: 'Hub is the public face; Corner Store is the durable business presence.' },
+            { id: 'litchfield', note: 'Corporate parent for the legacy commercial operation.' },
+            { id: 'verbum', note: 'Where new technology is explored; Corner Store is day-to-day commerce.' }
+        ] },
+        { id: 'computednews', name: 'Computed News', domain: 'computednews.com', url: 'https://computednews.com', type: 'media', color: '#4aff9a', radius: 14, desc: 'Algorithmically curated technology news.', repo: 'https://github.com/PaoloTCS/ComputedNews', similar: [
+            { id: 'verbum', note: 'Tech coverage complements Verbum’s first-party R&D publishing.' },
+            { id: 'intlmirrors', note: 'Both emphasize global information flow and curation.' },
+            { id: 'polcorner', note: 'News and politics verticals share editorial tooling and audience curiosity.' },
+            { id: 'paolo', note: 'Media cluster is linked from the central hub.' }
+        ] },
+        { id: 'intlmirrors', name: 'International Mirrors', domain: 'internationalmirrors.com', url: 'https://internationalmirrors.com', type: 'media', color: '#4aff9a', radius: 14, desc: 'Global information exchange platform.', repo: 'https://github.com/PaoloTCS/internationalmirrors.com', similar: [
+            { id: 'computednews', note: 'Sibling media property: algorithms and breadth vs. depth.' },
+            { id: 'polcorner', note: 'Current-events and civic angles overlap for informed readers.' },
+            { id: 'paolo', note: 'Part of the outward-facing media ring around the hub.' }
+        ] },
+        { id: 'polcorner', name: 'Political Corner', domain: 'politicalcorner.com', url: 'https://politicalcorner.com', type: 'media', color: '#4aff9a', radius: 13, desc: 'Evidence-based political analysis.', repo: 'https://github.com/PaoloTCS/PoliticalCorner', similar: [
+            { id: 'computednews', note: 'Shared emphasis on evidence, sources, and technology’s role in news.' },
+            { id: 'intlmirrors', note: 'International framing meets domestic political analysis.' },
+            { id: 'paolo', note: 'Listed from the hub as part of the media network.' }
+        ] }
     ];
 
     const EDGES = [
@@ -90,6 +137,11 @@
     const panelPh = document.getElementById('panel-placeholder');
     const panelDetail = document.getElementById('panel-detail');
 
+    const domainById = {};
+    DOMAINS.forEach(function (x) {
+        domainById[x.id] = x;
+    });
+
     const nodes = DOMAINS.map(function (d) { return Object.assign({}, d); });
     const links = EDGES.map(function (e) { return Object.assign({}, e); });
 
@@ -105,13 +157,64 @@
         var desc = document.createElement('p');
         desc.className = 'panel-desc';
         desc.textContent = d.desc;
+        var linksWrap = document.createElement('div');
+        linksWrap.className = 'panel-links';
         var a = document.createElement('a');
         a.className = 'panel-link';
         a.href = d.url;
         a.target = '_blank';
         a.rel = 'noopener noreferrer';
         a.textContent = 'Visit site →';
-        panelDetail.append(h3, dom, desc, a);
+        linksWrap.appendChild(a);
+        if (d.repo) {
+            var r = document.createElement('a');
+            r.className = 'panel-link panel-link-repo';
+            r.href = d.repo;
+            r.target = '_blank';
+            r.rel = 'noopener noreferrer';
+            r.textContent = 'View repository →';
+            linksWrap.appendChild(r);
+        }
+        panelDetail.append(h3, dom, desc, linksWrap);
+
+        if (d.similar && d.similar.length) {
+            var simH = document.createElement('h4');
+            simH.className = 'panel-similar-heading';
+            simH.textContent = 'Theme overlaps';
+            var simP = document.createElement('p');
+            simP.className = 'panel-similar-intro';
+            simP.textContent = 'How this site relates to others in the network (curated; not automatic embedding).';
+            var ul = document.createElement('ul');
+            ul.className = 'panel-similar-list';
+            d.similar.forEach(function (s) {
+                var other = domainById[s.id];
+                if (!other) return;
+                var li = document.createElement('li');
+                var row = document.createElement('div');
+                row.className = 'panel-similar-row';
+                var title = document.createElement('div');
+                title.className = 'panel-similar-title';
+                var nameBtn = document.createElement('button');
+                nameBtn.type = 'button';
+                nameBtn.className = 'panel-similar-name';
+                nameBtn.textContent = other.name;
+                nameBtn.setAttribute('aria-label', 'Open details for ' + other.name);
+                nameBtn.addEventListener('click', function () {
+                    showPanel(other);
+                });
+                var domSmall = document.createElement('span');
+                domSmall.className = 'panel-similar-domain';
+                domSmall.textContent = other.domain;
+                title.append(nameBtn, domSmall);
+                var note = document.createElement('p');
+                note.className = 'panel-similar-note';
+                note.textContent = s.note;
+                row.append(title, note);
+                li.appendChild(row);
+                ul.appendChild(li);
+            });
+            panelDetail.append(simH, simP, ul);
+        }
     }
 
     function resetPanel() {
@@ -187,7 +290,7 @@
                 .strength(function (d) { return d.strength * 0.65; })
                 .distance(function (d) { return 90 - d.strength * 35; })
         )
-        .force('charge', d3.forceManyBody().strength(-220))
+        .force('charge', d3.forceManyBody().strength(-240))
         .force('center', d3.forceCenter(w / 2, h / 2))
         .force(
             'collide',
