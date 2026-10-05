@@ -1,4 +1,5 @@
 export const sources = {
+ elena:['American Aristocracy · Elena Naryshkina Pignatelli','https://americanaristocracy.com/people/elena-naryshkina-pignatelli'],
  recent:['The Heirs of Europe','https://heirsofeurope.blogspot.com/2016/11/pignatelli-di-montecalvo.html'],
  montecalvo:['Genmarenostrum · Montecalvo','https://www.genmarenostrum.com/pagine-lettere/letterap/PIGNATELLI/PIGNATELLI%20DUCHI%20DI%20MONTECALVO.htm'],
  casalnuovo:['Genmarenostrum · Casalnuovo','https://www.genmarenostrum.com/pagine-lettere/letterap/PIGNATELLI/PIGNATELLI%20MARCHESI%20DI%20CASALNUOVO.htm'],
@@ -31,8 +32,11 @@ people.push({id:'lucio',name:'Lucio Pignatelli',detail:'Traditionally 1102 · id
 people[0].sex='male';
 people.push({id:'natalia',name:'Natalia Pignatelli',detail:'Born 8 July 1951 · Paolo’s sister',parent:null,sex:'female',source:'libro'});
 people.push({id:'guido-aquino',name:'Guido d’Aquino di Caramanico',detail:'Natalia’s husband · marriage recorded 30 June 1975',parent:null,sex:'male',source:'libro'});
+people.push({id:'elena-naryshkina',name:'Elena Naryshkina Pignatelli',detail:'1879–1961 · Paolo’s grandmother · Naryshkina family',parent:null,sex:'female',source:'elena',familyOrigin:'Naryshkina'});
 // These are explicit sibling and marriage statements, not invented parent links.
 export const familyLinks=[
+ {id:'elena-pompeo',type:'spouse',from:'elena-naryshkina',to:'person-2',source:'elena'},
+ {id:'guido-elena',type:'parent',from:'person-1',to:'elena-naryshkina',source:'elena'},
  {id:'paolo-natalia',type:'sibling',from:'person-0',to:'natalia',source:'libro'},
  {id:'natalia-guido-aquino',type:'spouse',from:'natalia',to:'guido-aquino',source:'libro',date:'1975-06-30',place:'Naples'}
 ];
@@ -44,10 +48,14 @@ function connectedPath(aId,bId,byId,relations){
  const adjacency=new Map([...byId.keys()].map(id=>[id,[]]));
  const add=(from,to,direction,link)=>adjacency.get(from).push({to,direction,link});
  for(const child of byId.values())if(child.parent){const link=parentLink(child,byId);add(child.id,child.parent,'parent',link);add(child.parent,child.id,'child',link);}
- for(const edge of relations){if(!byId.has(edge.from)||!byId.has(edge.to))throw new Error('Missing family link endpoint');if(!['sibling','spouse'].includes(edge.type))throw new Error('Unknown family link type');const link={...edge,from:byId.get(edge.from),to:byId.get(edge.to),kind:'Published book',source:sources[edge.source]||null};add(edge.from,edge.to,edge.type,link);add(edge.to,edge.from,edge.type,link);}
+ for(const edge of relations){if(!byId.has(edge.from)||!byId.has(edge.to))throw new Error('Missing family link endpoint');if(!['parent','sibling','spouse'].includes(edge.type))throw new Error('Unknown family link type');const link={...edge,from:byId.get(edge.from),to:byId.get(edge.to),...(edge.type==='parent'?{child:byId.get(edge.from),parent:byId.get(edge.to)}:{}),kind:edge.source==='libro'?'Published book':'Published genealogy',source:sources[edge.source]||null};add(edge.from,edge.to,edge.type,link);add(edge.to,edge.from,edge.type==='parent'?'child':edge.type,link);}
  const queue=[{id:aId,path:[],nodes:[byId.get(aId)]}],seen=new Set([aId]);
  for(let index=0;index<queue.length;index++){const current=queue[index];if(current.id===bId){const pattern=current.path.map(e=>e.direction).join(','),person=byId.get(aId);let label='Recorded family connection';
-   if(pattern==='spouse')label='Spouse';
+   if(pattern==='parent')label='Child';
+   else if(pattern==='child')label='Parent';
+   else if(/^parent(,parent)+$/.test(pattern))label=current.path.length===2?'Grandchild':`Descendant (${current.path.length} generations)`;
+   else if(/^child(,child)+$/.test(pattern))label=current.path.length===2?'Grandparent':`Ancestor (${current.path.length} generations)`;
+   else if(pattern==='spouse')label='Spouse';
    else if(pattern==='sibling')label=person.sex==='male'?'Brother':person.sex==='female'?'Sister':'Sibling';
    else if(['sibling,spouse','spouse,sibling'].includes(pattern))label=person.sex==='male'?'Brother-in-law':person.sex==='female'?'Sister-in-law':'Sibling-in-law';
    return {status:'recorded',label,basis:'family-links',pattern,links:current.path.map(e=>e.link),path:current.nodes};

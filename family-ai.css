@@ -5,3 +5,5 @@
 /* Keep navigation in the document flow at every text size and zoom level. */
 .family-page header{position:sticky;top:0}.family-page .family-main{margin-top:0}
 @media(max-width:768px){.family-page .nav-menu{position:absolute;top:100%}}
+
+.family-crest{margin:18px 0 24px}.family-crest img{display:block;width:auto;height:230px;max-width:100%;object-fit:contain}.family-crest figcaption{font-size:.8rem;color:var(--family-muted);margin-top:8px}.family-intro{align-items:flex-start}.family-intro .archive-link{margin-top:28px}.relationship-filter{display:flex;flex-direction:column;gap:8px;margin:20px 0 8px;max-width:480px}.family-connections a,.cousins a{color:#a9d1ff}@media(max-width:650px){.family-crest img{height:190px}}

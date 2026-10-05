@@ -56,3 +56,12 @@ test('endpoint rejects off-origin requests and reports missing Jev configuration
   const bad=response();await handler({method:'POST',headers:{host:'example.test',origin:'https://other.test'},body:input},bad);assert.equal(bad.code,403);
  }finally{if(previous!==undefined)process.env.TYPESAFE_API_KEY=previous;}
 });
+
+ test('Elena’s maternal and spouse connections retain separate source links',()=>{
+ const r=relationship('person-0','elena-naryshkina');
+ assert.equal(r.label,'Grandchild');
+ assert.equal(relationship('elena-naryshkina','person-0').label,'Grandparent');
+ assert.equal(relationship('elena-naryshkina','person-2').label,'Spouse');
+ assert.equal(r.links.at(-1).source[1],'https://americanaristocracy.com/people/elena-naryshkina-pignatelli');
+ assert.equal(people.find(p=>p.id==='person-1').parent,'person-2');
+ });

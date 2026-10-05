@@ -1,4 +1,4 @@
-import {people,personLabel,relationship,linkLabel} from './relationships.js?v=20261005-libro';
+import {people,personLabel,relationship,linkLabel} from './relationships.js?v=20261005-crest';
 
 const root=document.getElementById('relationship-widget');
 if(root){
@@ -6,7 +6,19 @@ if(root){
  const a=root.querySelector('#relative-a'),b=root.querySelector('#relative-b'),result=root.querySelector('#relationship-result');
  let form=root.querySelector('#jev-form');
  const linkSelect=root.querySelector('#evidence-link'),status=root.querySelector('#jev-status'),review=root.querySelector('#jev-review-link');
+ const kind=root.querySelector('#relationship-kind'),filterNote=root.querySelector('#relationship-filter-note');
  let controller;
+ const matches=(id)=>{const r=relationship(a.value,id);if(!kind||kind.value==='all')return true;if(kind.value==='unresolved')return r.status==='unresolved';if(r.status!=='recorded'||a.value===id)return false;
+ if(kind.value==='marriage')return r.pattern?.includes('spouse');
+ if(kind.value==='siblings')return r.pattern==='sibling'||r.label.startsWith('Sibling');
+ if(kind.value==='branches')return r.label.startsWith('Cousins');
+ return r.basis==='family-links'?/^(parent|child)(,(parent|child))*$/.test(r.pattern):r.distances.some(d=>d===0);
+ };
+ function filterPeople(){const old=b.value;b.replaceChildren();for(const p of people)if(matches(p.id)){const opt=node('option',personLabel(p));opt.value=p.id;b.append(opt);}if([...b.options].some(o=>o.value===old))b.value=old;
+ const empty=!b.options.length;b.disabled=empty;root.querySelector('#swap-relatives').disabled=empty;
+ if(filterNote)filterNote.textContent=empty?'No matching connection has been entered yet. Try another relationship, or help us add your branch.':'';
+ if(empty){controller?.abort();result.replaceChildren(node('p','No recorded matches for this selection.'));if(form)form.hidden=true;if(review)review.hidden=true;}else update();
+ }
  for(const p of people){for(const select of [a,b]){const opt=node('option',personLabel(p));opt.value=p.id;select.append(opt);}}
  const query=new URLSearchParams(location.search);
  a.value=people.some(p=>p.id===query.get('a'))?query.get('a'):'person-0';
@@ -32,8 +44,8 @@ if(root){
   if(review){const url=new URL('https://pignatelli-family-agents.vercel.app/');url.searchParams.set('a',a.value);url.searchParams.set('b',b.value);url.hash='relationship-widget';review.href=url.href;review.hidden=!r.links.length;}
   if(form){linkSelect.replaceChildren();for(const l of r.links){const opt=node('option',linkLabel(l));opt.value=l.id;linkSelect.append(opt);}form.hidden=!r.links.length;status.replaceChildren(node('p','Jev assesses one supplied excerpt at a time. No assessment has run for this pair.'));}
  }
- a.addEventListener('change',update);b.addEventListener('change',update);
- root.querySelector('#swap-relatives').addEventListener('click',()=>{[a.value,b.value]=[b.value,a.value];update();});
+ a.addEventListener('change',filterPeople);b.addEventListener('change',update);kind?.addEventListener('change',filterPeople);
+ root.querySelector('#swap-relatives').addEventListener('click',()=>{const previous=a.value;a.value=b.value;if(kind)kind.value='all';filterPeople();b.value=previous;update();});
  if(form){
   const clear=()=>{controller?.abort();controller=null;form.querySelector('button').disabled=false;status.textContent='Evidence changed. No current assessment.';};
   form.addEventListener('input',clear);form.addEventListener('change',clear);
