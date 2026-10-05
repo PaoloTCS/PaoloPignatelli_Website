@@ -4,12 +4,15 @@ export const SOURCES = [
  {id:'recent',title:'The Heirs of Europe · Montecalvo pedigree',url:'https://heirsofeurope.blogspot.com/2016/11/pignatelli-di-montecalvo.html',scope:'Published recent ancestry; a compilation, not original records.'},
  {id:'tradition',title:'Pignatelli della Leonessa · Family history',url:'https://www.pignatellidellaleonessa.com/famiglia/',scope:'Traditional Lucio account and later branch division.'},
  {id:'review',title:'Lucia Lopriore · Review of Davide Shamà',url:'https://www.fondazioneterradotranto.it/2010/02/16/i-pignatelli-aristocratici-a-napoli-e-in-europa/',scope:'A review of historical research; not the underlying book.'},
+ {id:'elena',title:'American Aristocracy · Elena Naryshkina Pignatelli',url:'https://americanaristocracy.com/people/elena-naryshkina-pignatelli',scope:'Published compilation of Elena’s spouse and child; not the Elena–Felix path.'},
+ {id:'yusupov',title:'University College Oxford · Rasputin assassination',url:'https://www.univ.ox.ac.uk/news/the-assassination-of-rasputin/',scope:'Historical source about Felix Yusupov and Rasputin; no genealogy to Elena.'},
  {id:'montecalvo',title:'Genmarenostrum · Duchi di Montecalvo',url:'https://www.genmarenostrum.com/pagine-lettere/letterap/PIGNATELLI/PIGNATELLI%20DUCHI%20DI%20MONTECALVO.htm',scope:'Published earlier Montecalvo genealogy; may be inaccessible.'}
 ];
 const GOALS = {
  lucio:'Investigate whether the published Montecalvo line can be connected to Lucio Pignatelli, traditionally placed around 1102. Compare evidence for and against the traditional identification.',
  links:'Choose one Montecalvo parent–child relationship from the source material and assess exactly what supports it. Propose how to obtain an original record.',
- branches:'Investigate the division into Stefano, Carlo, and Palamede branches, and how the Montecalvo branch is placed. Distinguish this later division from the Lucio tradition.'
+ branches:'Investigate the division into Stefano, Carlo, and Palamede branches, and how the Montecalvo branch is placed. Distinguish this later division from the Lucio tradition.',
+ history:'Investigate whether Paolo’s grandmother Elena Naryshkina Pignatelli can be linked through documented ancestry or marriage to Prince Felix Yusupov, a participant in Rasputin’s assassination. Read the Elena compilation and the Oxford event account. They do not establish the Elena–Felix link. Propose up to four explicitly named, mutually distinguishable candidate routes for later evidence assessment, or state that no candidate route is currently sourced. Describe exactly which missing records or public genealogies to find next. Do not claim a family connection from a shared surname or historical association.'
 };
 export function validateInput(body) {
  if (!body || !Object.hasOwn(GOALS,body.goal) || !['en','it'].includes(body.language)) throw new Error('Choose a valid investigation and language.');
@@ -41,7 +44,7 @@ export async function readSource(id,fetcher=fetch) {
   try {while(true){const {value,done}=await reader.read();if(done)break;bytes+=value.byteLength;if(bytes>350000)throw new Error('source_too_large');parts.push(value);}}finally{await reader.cancel();}
   const text=plainText(Buffer.concat(parts.map(p=>Buffer.from(p))).toString('utf8'));
   if(text.length<100 || /verify you are human|checking your browser|just a moment|access denied/i.test(text.slice(0,600)))return {...source,checkedAt,status:'unavailable',detail:'The response is empty or an access screen.'};
-  const hints=[...text.matchAll(/Lucio|Sham[àa]|Pompeo|Stefano|Palamede|Tommaso|Montecalvo/gi)].slice(0,18);
+  const hints=[...text.matchAll(/Lucio|Sham[àa]|Pompeo|Stefano|Palamede|Tommaso|Montecalvo|Naryshkin|Elena|Yusupov|Rasputin|Guido|Felix/gi)].slice(0,18);
   const ranges=[[0,Math.min(text.length,1400)],...hints.map(m=>[Math.max(0,m.index-180),Math.min(text.length,m.index+600)])].sort((a,b)=>a[0]-b[0]);
   const merged=[];for(const r of ranges){const last=merged.at(-1);if(last&&r[0]<=last[1])last[1]=Math.max(last[1],r[1]);else merged.push(r);}
   const excerpt=merged.map(([a,b])=>`[characters ${a}–${b}] ${text.slice(a,b)}`).join('\n…\n').slice(0,10000);
@@ -76,7 +79,7 @@ export async function runInvestigation(input,{call,read=readSource,emit=()=>{},m
  const evidence=JSON.stringify(run.sources);
  for(const role of ['reviewer','coordinator']) {
   emit({type:'stage',role,status:'running'});
-  const task=role==='reviewer'?'Audit the explorer against ONLY the retrieved excerpts and attributed testimony. Identify unsupported joins, identity or chronology problems and copied-source limitations. Explain the status of the Lucio claim. Use 220 words at most.':'Using the evidence and reviewer findings, propose up to three small useful errands arising from the gaps. Each must state the question, evidence to obtain and how a family member can check success. Include a short shareable cousin update. Preserve all unresolved or disputed links. Use 250 words at most.';
+  const task=role==='reviewer'?(input.goal==='history'?'Audit the explorer against ONLY retrieved excerpts and attributed family testimony. Identify any unsupported Elena–Felix join or identity ambiguity. Treat an option without supporting evidence as a candidate, never an established link. Use 220 words at most.':'Audit the explorer against ONLY the retrieved excerpts and attributed testimony. Identify unsupported joins, identity or chronology problems and copied-source limitations. Explain the status of the Lucio claim. Use 220 words at most.'):(input.goal==='history'?'Suggest precise named relationship alternatives A–D only if the evidence supports formulating them, otherwise return no supported candidates. Name a useful public source or record to seek next. Keep the event claim separate from genealogy. Use 250 words at most.':'Using the evidence and reviewer findings, propose up to three small useful errands arising from the gaps. Each must state the question, evidence to obtain and how a family member can check success. Include a short shareable family update. Preserve all unresolved or disputed links. Use 250 words at most.');
   const response=await call({model,instructions,input:[{role:'user',content:`Mission: ${mission}\nEvidence: ${evidence}\nPrior agent outputs: ${JSON.stringify(run.stages)}\nYour ${role} assignment: ${task}`}],max_output_tokens:1400});
   run.usage.push(response.usage||{});const text=extractText(response);if(!text)throw new Error(`The ${role} did not return a complete report.`);
   run.stages.push({role,text});emit({type:'result',role,text});
