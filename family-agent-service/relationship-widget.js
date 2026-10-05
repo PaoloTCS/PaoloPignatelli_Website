@@ -1,4 +1,4 @@
-import {people,personLabel,relationship} from './relationships.js';
+import {people,personLabel,relationship,linkLabel} from './relationships.js?v=20261005-libro';
 
 const root=document.getElementById('relationship-widget');
 if(root){
@@ -17,19 +17,20 @@ if(root){
   const r=relationship(a.value,b.value),pa=people.find(p=>p.id===a.value),pb=people.find(p=>p.id===b.value);
   result.replaceChildren(node('h3',r.status==='unresolved'?'Connection unresolved':`${pa.name} → ${pb.name}: ${r.label}`));
   if(r.status==='unresolved'){
-   result.append(node('p','This limited paternal dataset contains no connecting path. That does not mean these people are unrelated. The route to Lucio remains unresolved and his historical identification is disputed.'));
+   result.append(node('p','This limited dataset contains no connecting path. That does not mean these people are unrelated. The route to Lucio remains unresolved and his historical identification is disputed.'));
   }else if(r.links.length){
-   result.append(node('p',r.distances.every(d=>d>0)?`Recorded common ancestor: ${personLabel(r.common)}.`:`${r.links.length} parent–child link${r.links.length===1?'':'s'} in the recorded path.`));
+   result.append(node('p',r.basis==='family-links'?`${r.links.length} recorded family links. ${r.pattern.includes('spouse')?'This connection passes through marriage.':''}`:r.distances.every(d=>d>0)?`Recorded common ancestor: ${personLabel(r.common)}.`:`${r.links.length} parent–child link${r.links.length===1?'':'s'} in the recorded path.`));
+   if(r.basis==='family-links'){const path=node('p',r.path.map(p=>p.name).join(' → '));path.className='relationship-path';result.append(path);}
    const details=node('details'),summary=node('summary',`Inspect ${r.links.length} link${r.links.length===1?'':'s'} and sources`),list=node('ol');
    details.append(summary,list);
-   for(const l of r.links){const li=node('li');li.append(node('strong',`${personLabel(l.child)} → ${personLabel(l.parent)}`),node('p',l.kind));
+   for(const l of r.links){const li=node('li');li.append(node('strong',linkLabel(l)),node('p',l.kind));
     if(l.source){const source=node('a',l.source[0]);source.href=l.source[1];source.target='_blank';source.rel='noopener noreferrer';li.append(source);}else li.append(node('p','Paolo’s attributed family testimony, 4 October 2026.'));
     list.append(li);
    }
-   result.append(details,node('p',r.links.every(l=>l.kind==='Family testimony')?'Paolo confirmed his father and grandfather. These links are attributed family testimony.':'This path includes relationships reported in published compilations. Original supporting records have not been checked in this project.'));
+   result.append(details,node('p',r.links.every(l=>l.kind==='Family testimony')?'Paolo confirmed his father and grandfather. These links are attributed family testimony.':r.links.every(l=>l.kind==='Published book')?'Both links are reported in the photographed Libro d’Oro entry, XIX edition, page 1257. The sibling and marriage statements are recorded separately.':'This path includes relationships reported in published compilations. Original supporting records have not been checked in this project.'));
   }
   if(review){const url=new URL('https://pignatelli-family-agents.vercel.app/');url.searchParams.set('a',a.value);url.searchParams.set('b',b.value);url.hash='relationship-widget';review.href=url.href;review.hidden=!r.links.length;}
-  if(form){linkSelect.replaceChildren();for(const l of r.links){const opt=node('option',`${personLabel(l.child)} → ${personLabel(l.parent)}`);opt.value=l.child.id;linkSelect.append(opt);}form.hidden=!r.links.length;status.replaceChildren(node('p','Jev assesses one supplied excerpt at a time. No assessment has run for this pair.'));}
+  if(form){linkSelect.replaceChildren();for(const l of r.links){const opt=node('option',linkLabel(l));opt.value=l.id;linkSelect.append(opt);}form.hidden=!r.links.length;status.replaceChildren(node('p','Jev assesses one supplied excerpt at a time. No assessment has run for this pair.'));}
  }
  a.addEventListener('change',update);b.addEventListener('change',update);
  root.querySelector('#swap-relatives').addEventListener('click',()=>{[a.value,b.value]=[b.value,a.value];update();});
@@ -39,10 +40,10 @@ if(root){
   form.addEventListener('submit',async e=>{
    e.preventDefault();controller?.abort();const current=new AbortController();controller=current;const button=form.querySelector('button');button.disabled=true;status.textContent='Asking Jev to assess the supplied excerpt…';
    try{
-    const response=await fetch('/api/relationship',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({a:a.value,b:b.value,child:linkSelect.value,attribution:form.querySelector('#evidence-source').value,excerpt:form.querySelector('#evidence-excerpt').value}),signal:current.signal});
+    const response=await fetch('/api/relationship',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({a:a.value,b:b.value,link:linkSelect.value,attribution:form.querySelector('#evidence-source').value,excerpt:form.querySelector('#evidence-excerpt').value}),signal:current.signal});
     const data=await response.json();if(controller!==current)return;
     if(!response.ok)throw new Error(data.error||'Assessment unavailable. No score generated.');
-    const labels={supports:'Supports',contradicts:'Contradicts',ambiguous:'Ambiguous identity or parentage',unrelated:'Does not address the link'};
+    const labels={supports:'Supports',contradicts:'Contradicts',ambiguous:'Ambiguous identity or relationship',unrelated:'Does not address the link'};
     status.replaceChildren(node('h3',`Jev’s excerpt assessment: ${labels[data.answer.choice]}`),node('p',data.claim));
     const table=node('table'),caption=node('caption','Model probabilities for this excerpt’s textual support'),head=node('tr');head.append(node('th','Assessment'),node('th','Probability'));const thead=node('thead');thead.append(head);table.append(caption,thead);const body=node('tbody');
     for(const [key,label]of Object.entries(labels)){const tr=node('tr');tr.append(node('td',label),node('td',`${(data.answer.probabilities[key]*100).toFixed(1)}%`));body.append(tr);}table.append(body);status.append(table);

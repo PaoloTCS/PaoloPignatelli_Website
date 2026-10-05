@@ -1,7 +1,7 @@
-import {sources,people as records} from './family-agent-service/relationships.js';
+import {sources,people as records} from './family-agent-service/relationships.js?v=20261005-libro';
 (function () {
 'use strict';
-const people=records.filter(p=>p.id!=='lucio').map(p=>[p.name,p.detail,p.source]);
+const people=records.filter(p=>/^person-\d+$/.test(p.id)).map(p=>[p.name,p.detail,p.source]);
 let selected = 0;
 function el(tag, text, cls) { const n=document.createElement(tag);if(text)n.textContent=text;if(cls)n.className=cls;return n; }
 function showPerson(i) {
@@ -11,7 +11,10 @@ function showPerson(i) {
  const family=p[2]==='family';
  panel.append(el('span',parent?(family?'Family testimony':'Published genealogy'):'Earlier path unresolved','badge'));
  panel.append(el('p',parent?p[0]+' is reported as the son of '+parent[0]+'.':'The path earlier than Tommaso is not reconstructed here. Lucio must not be attached as a verified ancestor.'));
- if(family) panel.append(el('p','Paolo confirmed Guido as his father and Pompeo as his grandfather on 4 October 2026. This is attributed family testimony.'));
+ if(family) {
+  panel.append(el('p','Paolo confirmed Guido as his father and Pompeo as his grandfather on 4 October 2026. This is attributed family testimony.'));
+  const book=el('a','Libro d’Oro · XIX edition · p. 1257');book.href='#libro-doro-note';panel.append(book,el('p','The photographed book entry also names Guido as Paolo’s father. Guido’s birth year, 1900, is printed in the book and was confirmed by Paolo on 5 October 2026. This page does not name Guido’s father.','small'));
+ }
  else if(p[2]!=='none') {
   const s=sources[p[2]],a=el('a',s[0]);a.href=s[1];a.target='_blank';a.rel='noopener noreferrer';panel.append(a);
   panel.append(el('p','A published compilation reports this relationship. Original supporting records have not yet been examined in this project.','small'));

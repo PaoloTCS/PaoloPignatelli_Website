@@ -12,6 +12,6 @@ export default async function handler(req,res) {
   const r=await fetch('https://api.typesafe.ai/v1/systemone',{method:'POST',headers:{Authorization:`Bearer ${key}`,'Content-Type':'application/json'},body:JSON.stringify(assessment.request),signal:AbortSignal.timeout(45000)});
   if(!r.ok)return res.status(503).json({error:r.status===401?'The Jev server credential needs attention. No score was generated.':r.status===429||r.status===529?'Jev is busy. Try again later; no score was generated.':'Jev could not complete this assessment. No score was generated.'});
   const result=validateAnswer(await r.json());
-  return res.status(200).json({...result,claim:assessment.claim,attribution:assessment.attribution,completedAt:new Date().toISOString(),rubricVersion:'parentage-excerpt-v1',limit:'Textual support in a supplied excerpt; source authenticity and historical truth are unverified. Human review required.'});
+  return res.status(200).json({...result,claim:assessment.claim,attribution:assessment.attribution,completedAt:new Date().toISOString(),rubricVersion:'family-relationship-excerpt-v2',limit:'Textual support in a supplied excerpt; source authenticity and historical truth are unverified. Human review required.'});
  }catch{return res.status(503).json({error:'The Jev assessment could not complete. No score was generated.'});}
 }

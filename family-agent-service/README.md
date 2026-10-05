@@ -12,10 +12,10 @@ Run `npm test` for orchestration, input, and source-access tests. Deploy this di
 
 ## Relationship explorer and Jev
 
-Shared `relationships.js` holds the same attributed paternal links used by both public widgets. The explorer calculates recorded kinship in code and preserves the unconnected Lucio entry. It is not a complete family graph.
+Shared `relationships.js` holds the same attributed paternal links used by both public widgets. The explorer calculates recorded kinship in code and preserves the unconnected Lucio entry. The XIX edition of Libro d’Oro, page 1257, supplied by Paolo, adds explicit sibling and spouse edges. Generic sibling/spouse rules derive in-law relationships. No parents are invented to encode a sibling statement. It is not a complete family graph.
 
 The private room can send one user-supplied source excerpt (40–6000 characters), source label, and one selected path link to TypeSafe Jev. `/api/relationship` uses a server-only `TYPESAFE_API_KEY`; configure that variable in Vercel project settings for Production and redeploy. Do not put the credential in chat, browser scripts, source files, URLs or logs. Without a key the endpoint returns an explicit unavailable status with no invented assessment.
 
-Jev uses Choice to assess textual support, contradiction, ambiguous identity/parentage, or unrelated text. Display the complete distribution, concentration confidence, model version, rubric version and timestamp. These probabilities are not a validated probability of historical truth or biological kinship. No threshold accepts an edge automatically; all results require human review. Supplied excerpts and source labels are not independently authenticated. Neither excerpts nor assessments are persisted by this app. Provider processing still applies.
+Jev uses Choice to assess textual support, contradiction, ambiguous identity/relationship, or unrelated text. Display the complete distribution, concentration confidence, model version, rubric version and timestamp. These probabilities are not a validated probability of historical truth or biological kinship. No threshold accepts an edge automatically; all results require human review. Supplied excerpts and source labels are not independently authenticated. Neither excerpts nor assessments are persisted by this app. Provider processing still applies.
 
 The endpoint retains same-origin POST and deployment sign-in protection. The public GitHub Pages widget computes relationships locally and opens the private room for Jev assessments.
