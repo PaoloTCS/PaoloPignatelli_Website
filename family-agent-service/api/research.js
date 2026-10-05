@@ -13,7 +13,7 @@ export default async function handler(req,res) {
  const disconnect=new AbortController();res.on('close',()=>disconnect.abort());
  const timeout=AbortSignal.any([AbortSignal.timeout(110000),disconnect.signal]);
  const call=async(body)=>{
-  const r=await fetch('https://ai-gateway.vercel.sh/v1/responses',{method:'POST',headers:{Authorization:`Bearer ${token}`,'Content-Type':'application/json'},body:JSON.stringify({...body,store:false,reasoning:{effort:'low'}}),signal:timeout});
+  const r=await fetch('https://ai-gateway.vercel.sh/v1/responses',{method:'POST',headers:{Authorization:`Bearer ${token}`,'Content-Type':'application/json'},body:JSON.stringify({...body,store:false,include:['reasoning.encrypted_content'],reasoning:{effort:'low'}}),signal:timeout});
   if(!r.ok){const e=new Error('model_service_unavailable');e.status=r.status;throw e;}return r.json();
  };
  let model;

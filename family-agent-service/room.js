@@ -23,3 +23,11 @@ stopButton.addEventListener('click',()=>controller?.abort());
 function report(){return `PIGNATELLI FAMILY · LIVE AGENT INVESTIGATION\nRun: ${completed.id}\nQuestion: ${completed.goal}\nStarted: ${completed.startedAt}\nCompleted: ${completed.completedAt}\nModel: ${completed.model}\nStatus: Model findings awaiting family review\nLimits: ${completed.limits}\n\n${completed.stages.map(s=>s.role.toUpperCase()+'\n'+s.text).join('\n\n')}\n\nSOURCE ACCESS\n${completed.sources.map(s=>`[${s.id}] ${s.title}\n${s.finalUrl||s.url}\n${s.status} · ${s.checkedAt}\n${s.detail}`).join('\n\n')}\n\nUSAGE\n${JSON.stringify(completed.usage)}\n\nNo genealogy was changed and no relatives were contacted.\n`;}
 document.getElementById('copy').addEventListener('click',async()=>{if(!completed)return;try{await navigator.clipboard.writeText(report());document.getElementById('report-status').textContent='Report copied.';}catch{document.getElementById('report-status').textContent='Clipboard unavailable. Download the report instead.';}});
 document.getElementById('download').addEventListener('click',()=>{if(!completed)return;const url=URL.createObjectURL(new Blob([report()],{type:'text/plain;charset=utf-8'})),a=node('a','');a.href=url;a.download=`pignatelli-investigation-${completed.id}.txt`;document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);});
+
+// GitHub Pages also serves this source directory as a static preview.
+// Only the separate authenticated Vercel room can run the server-side agents.
+if(location.hostname==='paolopignatelli.com'){
+ runButton.disabled=true;runButton.textContent='Interface preview';
+ const link=node('a','Open the private research room');link.href='https://pignatelli-family-agents.vercel.app/';link.className='open-room';document.querySelector('form .actions').append(link);
+ status.textContent='Interface preview. Open the private research room and sign in to run the agents.';
+}
