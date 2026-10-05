@@ -1,31 +1,7 @@
+import {sources,people as records} from './family-agent-service/relationships.js';
 (function () {
 'use strict';
-const sources = {
- recent:['The Heirs of Europe','https://heirsofeurope.blogspot.com/2016/11/pignatelli-di-montecalvo.html'],
- montecalvo:['Genmarenostrum · Montecalvo','https://www.genmarenostrum.com/pagine-lettere/letterap/PIGNATELLI/PIGNATELLI%20DUCHI%20DI%20MONTECALVO.htm'],
- casalnuovo:['Genmarenostrum · Casalnuovo','https://www.genmarenostrum.com/pagine-lettere/letterap/PIGNATELLI/PIGNATELLI%20MARCHESI%20DI%20CASALNUOVO.htm'],
- branches:['Pignatelli della Leonessa · Family history','https://www.pignatellidellaleonessa.com/famiglia/']
-};
-const people = [
- ['Paolo Pignatelli','di Montecalvo','family'],
- ['Guido Pignatelli','1906–1967','family'],
- ['Pompeo Pignatelli','1868–1960','recent'],
- ['Giuseppe Pignatelli','1831–1870 · Marchese di Paglieta','recent'],
- ['Carlo Pignatelli','1803–1878 · 8th Duca di Montecalvo','recent'],
- ['Giuseppe Pignatelli','1762–1842 · 7th Duca di Montecalvo','recent'],
- ['Carlo Pignatelli','1714–1781 · 5th Duca di Montecalvo','montecalvo'],
- ['Giovanni Battista Pignatelli','1677–1715 · 3rd Duca di Montecalvo','montecalvo'],
- ['Pompeo Pignatelli','1632–1705 · 2nd Duca di Montecalvo','montecalvo'],
- ['Giovanni Battista Pignatelli','1617–1658 · 3rd Marchese di Paglieta','montecalvo'],
- ['Pompeo Pignatelli','Born 1580 · 2nd Marchese di Paglieta','montecalvo'],
- ['Carlo Pignatelli','1st Marchese di Paglieta','montecalvo'],
- ['Federico Pignatelli','Lord of Paglieta','montecalvo'],
- ['Marco Antonio Pignatelli','Son of Annibale','montecalvo'],
- ['Annibale Pignatelli','Montecalvo line','casalnuovo'],
- ['Cesare Pignatelli','Lord of Orta and Toritto','casalnuovo'],
- ['Stefano Pignatelli','Living after 1448','branches'],
- ['Tommaso Pignatelli','Father of Stefano, Carlo, and Palamede','none']
-];
+const people=records.filter(p=>p.id!=='lucio').map(p=>[p.name,p.detail,p.source]);
 let selected = 0;
 function el(tag, text, cls) { const n=document.createElement(tag);if(text)n.textContent=text;if(cls)n.className=cls;return n; }
 function showPerson(i) {
