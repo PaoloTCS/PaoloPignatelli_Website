@@ -1,0 +1,16 @@
+{
+  "name": "pignatelli-family-gate",
+  "main": "worker.mjs",
+  "compatibility_date": "2026-10-07",
+  "compatibility_flags": ["nodejs_compat"],
+  "workers_dev": false,
+  "preview_urls": false,
+  "assets": {
+    "directory": "./private-assets",
+    "binding": "ASSETS",
+    "run_worker_first": true,
+    "html_handling": "none",
+    "not_found_handling": "none"
+  },
+  "routes": [{"pattern": "paolopignatelli.com/*", "zone_name": "paolopignatelli.com"}]
+}
