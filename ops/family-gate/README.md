@@ -37,3 +37,8 @@ References:
 - https://developers.cloudflare.com/workers/configuration/routing/routes/
 - https://developers.cloudflare.com/workers/examples/basic-auth/
 - https://docs.github.com/en/pages/getting-started-with-github-pages/creating-a-github-pages-site
+
+
+## Public tree after cleanup
+
+The allowlisted family files are no longer in this public repository. Rebuild the Worker bundle from the private repository `PaoloTCS/pignatelli-family-source`, not from GitHub Pages. Do not publish that private repository with GitHub Pages.
