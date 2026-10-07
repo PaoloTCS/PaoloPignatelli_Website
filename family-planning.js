@@ -1,9 +1,0 @@
-const form=document.getElementById('idea-form'),topic=document.getElementById('topic'),idea=document.getElementById('idea'),draft=document.getElementById('draft'),panel=document.getElementById('draft-panel'),status=document.getElementById('message-status'),whatsapp=document.getElementById('whatsapp-message');
-const pageUrl='https://paolopignatelli.com/family-planning.html';
-function updateLink(){whatsapp.href='https://wa.me/?text='+encodeURIComponent(draft.value);}
-form.addEventListener('submit',event=>{event.preventDefault();const name=document.getElementById('name').value.trim();draft.value='Famiglia Pignatelli — planning\nTopic: '+topic.value+'\n\n'+idea.value.trim()+(name?'\n\n— '+name:'')+'\n\n'+pageUrl;updateLink();panel.hidden=false;status.textContent='Message prepared. Review it, then copy it or choose a WhatsApp chat. Nothing has been sent.';draft.focus();});
-draft.addEventListener('input',updateLink);
-document.querySelectorAll('[data-topic]').forEach(button=>button.addEventListener('click',()=>{topic.value=button.dataset.topic;form.scrollIntoView({behavior:'smooth',block:'start'});idea.focus();}));
-document.querySelectorAll('[data-role]').forEach(button=>button.addEventListener('click',()=>{topic.value='Volunteer to help build';idea.value='I could help with '+button.dataset.role+'.\nMy skills or interests: \nA small part I could take on: ';form.scrollIntoView({behavior:'smooth',block:'start'});idea.focus();}));
-document.getElementById('copy-message').addEventListener('click',async()=>{try{await navigator.clipboard.writeText(draft.value);status.textContent='Copied. Paste your message into the family conversation.';}catch{draft.focus();draft.select();status.textContent='Select and copy the message, then paste it into WhatsApp.';}});
-whatsapp.addEventListener('click',()=>{updateLink();status.textContent='Choose the family group in WhatsApp and review your message there before sending.';});
